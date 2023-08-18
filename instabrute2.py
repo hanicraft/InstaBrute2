@@ -234,9 +234,12 @@ class Widget1(QWidget):
             csrf_token = self.csrftokens.text()
             x_requested_with = 'XMLHttpRequest'
             referer = 'https://www.instagram.com/accounts/login/'
+            # Read passwords from the specified file and create a list
+            with open(self.passwordlist.text(), 'r') as file:
+                passwords = file.read().splitlines()
             core = Core(user_agent, csrf_token, x_requested_with, referer)
-            core.instabrute_passlist(self.username.text(), self.passwordlist.text(), self.timeoutspin.value(), output=self.output1)
-
+            core.instabrute_passlist(self.username.text(), passwords, self.timeoutspin.value(), output=self.output1)
+    
     def start_proxy(self):
         os.system("python vpn.py")
         self.output1.appendPlainText("VPN Opened Up. Now Login With Your VPNBook Account")
